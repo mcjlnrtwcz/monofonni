@@ -5,8 +5,18 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>monofonni</title>
+    <link rel="stylesheet" href="synthesizer.css">
 </head>
 <body>
+    <div id="main-panel">
+        <div>
+            <div id="volume-wrapper">
+                <input id="volume" type="range" min="0.0" max="1.0" step="0.001" value="1.0">
+            </div>
+            <label for="volume">Volume</label>
+        </div>
+    </div>
+
     <script src="synthesizer.js"></script>
 </body>
 </html>

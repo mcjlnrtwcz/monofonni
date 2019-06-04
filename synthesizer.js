@@ -2,6 +2,11 @@ function midiToFrequency(noteNumber) {
     return Math.pow(2, (noteNumber - 69) / 12) * 440;
 }
 
+/** Map linear value (in range [0.0, 1.0]) to exponential value. */
+function exponentialValue(linearValue) {
+    return (Math.pow(10, parseFloat(linearValue)) - 1) / 10;
+}
+
 const FREQUENCIES = {
     "a": midiToFrequency(60), // C
     "w": midiToFrequency(61), // C#
@@ -20,8 +25,11 @@ const FREQUENCIES = {
 
 const context = new window.AudioContext();
 
+const output = context.createGain();
+output.connect(context.destination);
+
 const amp = context.createGain();
-amp.connect(context.destination);
+amp.connect(output);
 amp.gain.setValueAtTime(0, context.currentTime);
 
 const oscillator = context.createOscillator();
@@ -36,3 +44,6 @@ document.addEventListener("keypress", (event) => {
         amp.gain.setTargetAtTime(0, context.currentTime + 0.25, 0.25);
     }
 });
+
+volume = document.querySelector("#volume");
+volume.addEventListener("input", () => output.gain.value = exponentialValue(volume.value), false);
