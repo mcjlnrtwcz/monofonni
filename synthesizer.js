@@ -2,9 +2,9 @@ function midiToFrequency(noteNumber) {
     return Math.pow(2, (noteNumber - 69) / 12) * 440;
 }
 
-/** Map linear value (in range [0.0, 1.0]) to exponential value. */
-function exponentialValue(linearValue) {
-    return (Math.pow(10, parseFloat(linearValue)) - 1) / 10;
+/** Map linear value (in range [0.0, 1.0]) to exponential value (in custom range). */
+function exponentialValue(linearValue, minValue=0.0, maxValue = 1.0) {
+    return ((Math.pow(10, linearValue) - 1) / 9) * (maxValue - minValue) + minValue;
 }
 
 const FREQUENCIES = {
@@ -23,6 +23,8 @@ const FREQUENCIES = {
     "k": midiToFrequency(72), // C
 }
 
+/* Audio nodes */
+
 const context = new window.AudioContext();
 
 const output = context.createGain();
@@ -32,9 +34,22 @@ const amp = context.createGain();
 amp.connect(output);
 amp.gain.setValueAtTime(0, context.currentTime);
 
+const filterA = context.createBiquadFilter();
+filterA.frequency.value = 8000;
+// Cascading filters, see https://www.earlevel.com/main/2016/09/29/cascading-filters/
+filterA.Q.value = 1.3065630;
+filterA.connect(amp);
+const filterB = context.createBiquadFilter();
+filterB.frequency.value = 8000;
+filterB.Q.value = 0.54119610;
+filterB.connect(filterA);
+
 const oscillator = context.createOscillator();
-oscillator.connect(amp);
+oscillator.type = "square";
+oscillator.connect(filterB);
 oscillator.start();
+
+/* Controls */
 
 document.addEventListener("keypress", (event) => {
     if (FREQUENCIES.hasOwnProperty(event.key)) {
@@ -45,5 +60,16 @@ document.addEventListener("keypress", (event) => {
     }
 });
 
-volume = document.querySelector("#volume");
-volume.addEventListener("input", () => output.gain.value = exponentialValue(volume.value), false);
+filterControl = document.querySelector("#filter-control");
+filterControl.addEventListener(
+    "input",
+    () => {
+        const freq = exponentialValue(filterControl.value, 32, 8000);
+        filterA.frequency.value = freq;
+        filterB.frequency.value = freq;
+    },
+    false
+);
+
+outputControl = document.querySelector("#output-control");
+outputControl.addEventListener("input", () => output.gain.value = exponentialValue(outputControl.value), false);

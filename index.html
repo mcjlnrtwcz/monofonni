@@ -9,11 +9,17 @@
 </head>
 <body>
     <div id="main-panel">
-        <div>
-            <div id="volume-wrapper">
-                <input id="volume" type="range" min="0.0" max="1.0" step="0.001" value="1.0">
+        <div class="fader-wrapper">
+            <div class="fader">
+                <input id="filter-control" type="range" min="0.0" max="1.0" step="0.001" value="1.0">
             </div>
-            <label for="volume">Volume</label>
+            <label for="filter-control">Filter</label>
+        </div>
+        <div class="fader-wrapper">
+            <div class="fader">
+                <input id="output-control" type="range" min="0.0" max="1.0" step="0.001" value="1.0">
+            </div>
+            <label for="output-control">Output</label>
         </div>
     </div>
 
