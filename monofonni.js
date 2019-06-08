@@ -3,7 +3,7 @@ function midiToFrequency(noteNumber) {
 }
 
 /** Map linear value (in range [0.0, 1.0]) to exponential value (in custom range). */
-function exponentialValue(linearValue, minValue=0.0, maxValue = 1.0) {
+function exponentialValue(linearValue, minValue=0.0, maxValue=1.0) {
     return ((Math.pow(10, linearValue) - 1) / 9) * (maxValue - minValue) + minValue;
 }
 
@@ -37,11 +37,13 @@ amp.gain.setValueAtTime(0, context.currentTime);
 const filterA = context.createBiquadFilter();
 filterA.frequency.value = 8000;
 // Cascading filters, see https://www.earlevel.com/main/2016/09/29/cascading-filters/
-filterA.Q.value = 1.3065630;
+const filterAdefualtQ = 1.3065630;
+filterA.Q.value = filterAdefualtQ;
 filterA.connect(amp);
 const filterB = context.createBiquadFilter();
 filterB.frequency.value = 8000;
-filterB.Q.value = 0.54119610;
+const filterBdefaultQ = 0.54119610;
+filterB.Q.value = filterBdefaultQ;
 filterB.connect(filterA);
 
 const oscillator = context.createOscillator();
@@ -60,13 +62,23 @@ document.addEventListener("keypress", (event) => {
     }
 });
 
-filterControl = document.querySelector("#filter-control");
-filterControl.addEventListener(
+frequencyControl = document.querySelector("#frequency-control");
+frequencyControl.addEventListener(
     "input",
     () => {
-        const freq = exponentialValue(filterControl.value, 32, 8000);
+        const freq = exponentialValue(frequencyControl.value, 32, 8000);
         filterA.frequency.value = freq;
         filterB.frequency.value = freq;
+    },
+    false
+);
+
+resonanceControl = document.querySelector("#resonance-control");
+resonanceControl.addEventListener(
+    "input",
+    () => {
+        filterA.Q.value = filterAdefualtQ + exponentialValue(resonanceControl.value, 0, 10);
+        filterB.Q.value = filterBdefaultQ + exponentialValue(resonanceControl.value, 0, 10);
     },
     false
 );
