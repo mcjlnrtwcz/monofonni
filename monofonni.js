@@ -25,7 +25,8 @@ const FREQUENCIES = {
 
 /* Audio nodes */
 
-const context = new window.AudioContext();
+// const context = new AudioContext();
+const context = new OfflineAudioContext(1, 48000 * 5, 48000);
 
 const output = context.createGain();
 output.connect(context.destination);
@@ -40,6 +41,7 @@ filterA.frequency.value = 8000;
 const filterAdefualtQ = 1.3065630;
 filterA.Q.value = filterAdefualtQ;
 filterA.connect(amp);
+
 const filterB = context.createBiquadFilter();
 filterB.frequency.value = 8000;
 const filterBdefaultQ = 0.54119610;
@@ -51,14 +53,20 @@ oscillator.type = "square";
 oscillator.connect(filterB);
 oscillator.start();
 
-/* Controls */
+/* Synthesizer controls */
+
+function playNote(frequency) {
+    amp.gain.cancelScheduledValues(context.currentTime);
+    oscillator.frequency.value = frequency;
+    amp.gain.setValueAtTime(1, context.currentTime);
+    amp.gain.setTargetAtTime(0, context.currentTime + 0.25, 0.25);
+}
+
+/* UI controls */
 
 document.addEventListener("keypress", (event) => {
     if (FREQUENCIES.hasOwnProperty(event.key)) {
-        amp.gain.cancelScheduledValues(context.currentTime);
-        oscillator.frequency.value = FREQUENCIES[event.key];
-        amp.gain.setValueAtTime(1, context.currentTime);
-        amp.gain.setTargetAtTime(0, context.currentTime + 0.25, 0.25);
+        playNote(FREQUENCIES[event.key]);
     }
 });
 
@@ -85,3 +93,26 @@ resonanceControl.addEventListener(
 
 outputControl = document.querySelector("#output-control");
 outputControl.addEventListener("input", () => output.gain.value = exponentialValue(outputControl.value), false);
+
+/* Offline */
+
+let file = null;
+function prepareFile(contents) {
+    const data = new Blob([contents], {type: 'text/plain'});
+    // If we are replacing a previously generated file we need to manually revoke the object URL to avoid memory leaks.
+    if (file !== null) {
+        window.URL.revokeObjectURL(file);
+    }
+    file = window.URL.createObjectURL(data);
+    return file;
+}
+
+context.startRendering().then(buffer => {
+    var link = document.createElement('a');
+    link.setAttribute('download', 'info.txt');
+    link.href = prepareFile(buffer.getChannelData(0));
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+});
+playNote(250);
