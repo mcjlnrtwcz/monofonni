@@ -16,7 +16,6 @@ export class Synthesizer {
 
         this.filterA = context.createBiquadFilter();
         this.filterA.frequency.value = 8000;
-        // Cascading filters, see https://www.earlevel.com/main/2016/09/29/cascading-filters/
         this.filterAdefualtQ = 1.3065630;
         this.filterA.Q.value = this.filterAdefualtQ;
         this.filterA.connect(this.amp);
