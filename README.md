@@ -17,6 +17,7 @@ and visit http://127.0.0.1:3000
 ## Keyboard controls
 
 Notes are mapped to the folliwng keys:
+
 | C | C# | D | D# | E | F | F# | G | G# | A | A# | B | C |
 |---|----|---|----|---|---|----|---|----|---|----|---|---|
 | A | W  | S | E  | D | F | T  | G | Y  | H | U  | J | K |
