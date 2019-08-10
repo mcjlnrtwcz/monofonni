@@ -3,7 +3,7 @@ function exponentialValue(linearValue, minValue=0.0, maxValue=1.0) {
     return ((Math.pow(10, linearValue) - 1) / 9) * (maxValue - minValue) + minValue;
 }
 
-export class Synthesizer {
+export default class Synthesizer {
     constructor(context) {
         this.context = context;
 

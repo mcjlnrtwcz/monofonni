@@ -34,3 +34,10 @@ Articles that I've found helpful while working on the project.
 ### WAVE file format
 * http://soundfile.sapp.org/doc/WaveFormat/
 * http://www-mmsp.ece.mcgill.ca/Documents/AudioFormats/WAVE/WAVE.html
+
+### MIDI
+* https://www.smashingmagazine.com/2018/03/web-midi-api/
+* https://www.w3.org/TR/webmidi/
+* https://www.midi.org/specifications-old/item/table-1-summary-of-midi-message
+* http://www.tonalsoft.com/pub/pitch-bend/pitch.2005-08-31.17-00.aspx
+* http://www.music-software-development.com/midi-tutorial.html

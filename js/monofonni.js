@@ -1,10 +1,8 @@
-import { Synthesizer } from "./synthesizer.js";
+import Synthesizer from "./synthesizer.js";
+import { initializeMIDI, controlSynthesizerWithMIDI } from "./midi.js";
+import { midiToFrequency } from "./utils.js";
 
-function midiToFrequency(noteNumber) {
-    return Math.pow(2, (noteNumber - 69) / 12) * 440;
-}
-
-const FREQUENCIES = {
+const KEY_TO_FREQUENCY = {
     "a": midiToFrequency(60), // C
     "w": midiToFrequency(61), // C#
     "s": midiToFrequency(62), // D
@@ -18,14 +16,15 @@ const FREQUENCIES = {
     "u": midiToFrequency(70), // A#
     "j": midiToFrequency(71), // B
     "k": midiToFrequency(72), // C
-}
+};
 
 const context = new AudioContext();
 const synthesizer = new Synthesizer(context);
+initializeMIDI((message) => controlSynthesizerWithMIDI(message, synthesizer));
 
 document.addEventListener("keypress", (event) => {
-    if (FREQUENCIES.hasOwnProperty(event.key)) {
-        synthesizer.playNote(FREQUENCIES[event.key]);
+    if (KEY_TO_FREQUENCY.hasOwnProperty(event.key)) {
+        synthesizer.playNote(KEY_TO_FREQUENCY[event.key]);
     }
 });
 
@@ -37,3 +36,8 @@ resonanceControl.addEventListener("input", () => synthesizer.filterResonance = r
 
 const outputControl = document.querySelector("#output-control");
 outputControl.addEventListener("input", () => synthesizer.outputGain = outputControl.value);
+
+// TODO: How to handle output from resume?
+document.querySelector('#resume').addEventListener('click', () => {
+    context.resume().then(() => {}, () => alert("Cannot resume playback!"));
+});
