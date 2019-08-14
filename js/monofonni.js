@@ -38,6 +38,15 @@ const outputControl = document.querySelector("#output-control");
 outputControl.addEventListener("input", () => synthesizer.outputGain = outputControl.value);
 
 // TODO: How to handle output from resume?
-document.querySelector('#resume').addEventListener('click', () => {
-    context.resume().then(() => {}, () => alert("Cannot resume playback!"));
+document.querySelector("#resume-button").addEventListener("click", (event) => {
+    if (context.state === "suspended") {
+        context.resume().then(() => {
+            document.querySelector("#resume-indicator").className = "on";
+        });
+    } else if (context.state === "running") {
+        context.suspend().then(() => {
+            document.querySelector("#resume-indicator").className = "off";
+        });
+    }
+    // TODO: Other options?
 });

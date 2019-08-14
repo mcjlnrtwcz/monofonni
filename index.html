@@ -1,35 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta name="description" content="Simple monophonic synthesizer">
-    <meta name="author" content="Maciej Lenartowicz">
+    <meta charset="utf-8" />
+    <meta name="description" content="Simple monophonic synthesizer" />
+    <meta name="author" content="Maciej Lenartowicz" />
     <title>monofonni</title>
-    <link rel="stylesheet" href="monofonni.css">
+    <link rel="stylesheet" href="monofonni.css" />
 </head>
 <body>
-    <div id="main-panel">
-        <div class="fader-wrapper">
-            <div class="fader">
-                <input id="frequency-control" type="range" min="0.0" max="1.0" step="0.001" value="1.0">
+    <div id="panels-wrapper">
+        <div id="main-panel" class="panel">
+            <div class="fader-wrapper">
+                <div class="fader">
+                    <input id="frequency-control" type="range" min="0.0" max="1.0" step="0.001" value="1.0" />
+                </div>
+                <label for="frequency-control">Frequency</label>
             </div>
-            <label for="frequency-control">Frequency</label>
+            <div class="fader-wrapper">
+                <div class="fader">
+                    <input id="resonance-control" type="range" min="0.0" max="1.0" step="0.001" value="0.0" />
+                </div>
+                <label for="resonance-control">Resonance</label>
+            </div>
+            <div id="output-control-wrapper" class="fader-wrapper">
+                <div class="fader">
+                    <input id="output-control" type="range" min="0.0" max="1.0" step="0.001" value="1.0" />
+                </div>
+                <label for="output-control">Output</label>
+            </div>
         </div>
-        <div class="fader-wrapper">
-            <div class="fader">
-                <input id="resonance-control" type="range" min="0.0" max="1.0" step="0.001" value="0.0">
-            </div>
-            <label for="resonance-control">Resonance</label>
-        </div>
-        <div id="output-control-wrapper" class="fader-wrapper">
-            <div class="fader">
-                <input id="output-control" type="range" min="0.0" max="1.0" step="0.001" value="1.0">
-            </div>
-            <label for="output-control">Output</label>
+
+        <div id="status-panel" class="panel">
+            <div id="resume-indicator" class="off"></div>
+            <button id="resume-button">ON / OFF</button>
         </div>
     </div>
-
-    <button id="resume">Resume playback</button>
 
     <script src="js/monofonni.js" type="module"></script>
 </body>

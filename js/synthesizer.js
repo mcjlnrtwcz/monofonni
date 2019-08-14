@@ -50,7 +50,7 @@ export default class Synthesizer {
     playNote(frequency) {
         this.amp.gain.cancelScheduledValues(this.context.currentTime);
         this.oscillator.frequency.value = frequency;
-        this.amp.gain.setValueAtTime(1, this.context.currentTime);
+        this.amp.gain.setValueAtTime(0.1, this.context.currentTime);
         this.amp.gain.setTargetAtTime(0, this.context.currentTime + 0.25, 0.25);
     }
 }

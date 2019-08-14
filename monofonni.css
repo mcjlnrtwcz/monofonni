@@ -1,11 +1,16 @@
 /* Colour palette: https://coolors.co/d8dbe2-a9bcd0-58a4b0-373f51-daa49a */
 
-body {
-    background-color: #292e3b;
-    color: #c8d4e1;
+body, button {
     font-family: "Helvetica Neue";
     font-weight: 200;
 }
+
+body {
+    background-color: #292e3b;
+    color: #c8d4e1;
+}
+
+/* Slider */
 
 input[type="range"] {
     -webkit-appearance: none;
@@ -64,15 +69,24 @@ input[type=range]::-moz-range-thumb {
     border: 1px solid #c8d4e1;
 }
 
-#main-panel {
-    background-color: #373f51;
-    border: 1px solid #5b6170;
-    border-radius: 4px;
+/* Panels */
+
+#panels-wrapper {
     position: absolute;
     top: 33%;
     left: 50%;
     transform: translateX(-50%);
+}
+
+.panel {
+    background-color: #373f51;
+    border: 1px solid #5b6170;
+    border-radius: 4px;
     padding: 10px 5px;
+}
+
+#main-panel {
+    margin-bottom: 20px;
 }
 
 .fader-wrapper {
@@ -105,4 +119,40 @@ input[type=range]::-moz-range-thumb {
 
 #output-control-wrapper {
     margin-left: 40px;
+}
+
+#status-panel {
+    background-color: #2e3443;
+    border-color: #373f51;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+#resume-button {
+    border: none;
+    background: transparent;
+    color: #c8d4e1;
+    font-family: "Helvetica Neue";
+    font-weight: 200;
+    font-size: 12px;
+}
+
+#resume-button:focus {
+    outline: none;
+}
+
+#resume-indicator {
+    display: block;
+    height: 12px;
+    width: 12px;
+    border-radius: 4px;
+}
+
+.on {
+    background: #76b4be;
+}
+
+.off {
+    background: #305a60;
 }
