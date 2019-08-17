@@ -1,7 +1,7 @@
 /* Colour palette: https://coolors.co/d8dbe2-a9bcd0-58a4b0-373f51-daa49a */
 
 body, button {
-    font-family: "Helvetica Neue";
+    font-family: "Helvetica Neue", sans-serif;
     font-weight: 200;
 }
 
@@ -82,7 +82,7 @@ input[type=range]::-moz-range-thumb {
     background-color: #373f51;
     border: 1px solid #5b6170;
     border-radius: 4px;
-    padding: 10px 5px;
+    padding: 10px;
 }
 
 #main-panel {
@@ -121,38 +121,48 @@ input[type=range]::-moz-range-thumb {
     margin-left: 40px;
 }
 
+/* Status panel */
+
 #status-panel {
     background-color: #2e3443;
     border-color: #373f51;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
+}
+
+.indicator-group {
+    display: flex;
+    align-items: center;
+}
+
+.indicator {
+    display: inline-block;
+    height: 12px;
+    width: 12px;
+    border-radius: 4px;
+}
+
+.indicator.on {
+    background: #76b4be;
+}
+
+.indicator.off {
+    background: #305a60;
+}
+
+.indicator-label {
+    font-size: 12px;
+    padding: 0;
+    margin-left: 10px;
 }
 
 #resume-button {
     border: none;
     background: transparent;
     color: #c8d4e1;
-    font-family: "Helvetica Neue";
-    font-weight: 200;
-    font-size: 12px;
 }
 
 #resume-button:focus {
     outline: none;
-}
-
-#resume-indicator {
-    display: block;
-    height: 12px;
-    width: 12px;
-    border-radius: 4px;
-}
-
-.on {
-    background: #76b4be;
-}
-
-.off {
-    background: #305a60;
 }

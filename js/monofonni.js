@@ -41,11 +41,11 @@ outputControl.addEventListener("input", () => synthesizer.outputGain = outputCon
 document.querySelector("#resume-button").addEventListener("click", (event) => {
     if (context.state === "suspended") {
         context.resume().then(() => {
-            document.querySelector("#resume-indicator").className = "on";
+            document.querySelector("#resume-indicator").className = "indicator on";
         });
     } else if (context.state === "running") {
         context.suspend().then(() => {
-            document.querySelector("#resume-indicator").className = "off";
+            document.querySelector("#resume-indicator").className = "indicator off";
         });
     }
     // TODO: Other options?
