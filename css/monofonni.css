@@ -1,0 +1,36 @@
+/* Colour palette: https://coolors.co/d8dbe2-a9bcd0-58a4b0-373f51-daa49a */
+
+@import "fader.css";
+@import "status_panel.css";
+
+body, button {
+    font-family: "Helvetica Neue", sans-serif;
+    font-weight: 200;
+}
+
+body {
+    background-color: #292e3b;
+    color: #c8d4e1;
+}
+
+#panels-wrapper {
+    position: absolute;
+    top: 33%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.panel {
+    background-color: #373f51;
+    border: 1px solid #5b6170;
+    border-radius: 4px;
+    padding: 10px;
+}
+
+#main-panel {
+    margin-bottom: 20px;
+}
+
+#output-control-wrapper {
+    margin-left: 40px;
+}

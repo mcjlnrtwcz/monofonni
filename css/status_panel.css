@@ -1,0 +1,43 @@
+#status-panel {
+    background-color: #2e3443;
+    border-color: #373f51;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.indicator-group {
+    display: flex;
+    align-items: center;
+}
+
+.indicator {
+    display: inline-block;
+    height: 12px;
+    width: 12px;
+    border-radius: 4px;
+}
+
+.indicator.on {
+    background: #76b4be;
+}
+
+.indicator.off {
+    background: #305a60;
+}
+
+.indicator-label {
+    font-size: 12px;
+    padding: 0;
+    margin-left: 10px;
+}
+
+#resume-button {
+    border: none;
+    background: transparent;
+    color: #c8d4e1;
+}
+
+#resume-button:focus {
+    outline: none;
+}
