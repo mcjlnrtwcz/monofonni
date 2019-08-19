@@ -3,7 +3,8 @@
 @import "fader.css";
 @import "status_panel.css";
 
-body, button {
+body,
+button {
     font-family: "Helvetica Neue", sans-serif;
     font-weight: 200;
 }

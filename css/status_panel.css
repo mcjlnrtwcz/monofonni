@@ -16,14 +16,11 @@
     height: 12px;
     width: 12px;
     border-radius: 4px;
+    background: #305a60;
 }
 
 .indicator.on {
     background: #76b4be;
-}
-
-.indicator.off {
-    background: #305a60;
 }
 
 .indicator-label {

@@ -1,6 +1,8 @@
 /** Map linear value (in range [0.0, 1.0]) to exponential value (in custom range). */
-function exponentialValue(linearValue, minValue=0.0, maxValue=1.0) {
-    return ((Math.pow(10, linearValue) - 1) / 9) * (maxValue - minValue) + minValue;
+function exponentialValue(linearValue, minValue = 0.0, maxValue = 1.0) {
+    return (
+        ((Math.pow(10, linearValue) - 1) / 9) * (maxValue - minValue) + minValue
+    );
 }
 
 export default class Synthesizer {
@@ -16,13 +18,13 @@ export default class Synthesizer {
 
         this.filterA = context.createBiquadFilter();
         this.filterA.frequency.value = 8000;
-        this.filterAdefualtQ = 1.3065630;
+        this.filterAdefualtQ = 1.306563;
         this.filterA.Q.value = this.filterAdefualtQ;
         this.filterA.connect(this.amp);
 
         this.filterB = context.createBiquadFilter();
         this.filterB.frequency.value = 8000;
-        this.filterBdefaultQ = 0.54119610;
+        this.filterBdefaultQ = 0.5411961;
         this.filterB.Q.value = this.filterBdefaultQ;
         this.filterB.connect(this.filterA);
 
@@ -39,8 +41,10 @@ export default class Synthesizer {
     }
 
     set filterResonance(resonance) {
-        this.filterA.Q.value = this.filterAdefualtQ + exponentialValue(resonance, 0, 10);
-        this.filterB.Q.value = this.filterBdefaultQ + exponentialValue(resonance, 0, 10);
+        this.filterA.Q.value =
+            this.filterAdefualtQ + exponentialValue(resonance, 0, 10);
+        this.filterB.Q.value =
+            this.filterBdefaultQ + exponentialValue(resonance, 0, 10);
     }
 
     set outputGain(gain) {

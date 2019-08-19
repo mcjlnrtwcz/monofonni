@@ -3,7 +3,7 @@ import { midiToFrequency } from "./utils.js";
 export function initializeMIDI(messageConsumer) {
     if (navigator.requestMIDIAccess) {
         navigator.requestMIDIAccess().then(
-            (midi) => {
+            midi => {
                 // TODO: Add selectable MIDI input
                 for (let input of midi.inputs.values()) {
                     input.onmidimessage = messageConsumer;
@@ -14,18 +14,21 @@ export function initializeMIDI(messageConsumer) {
             }
         );
     } else {
-        alert("Your browser does not support MIDI. External input is disabled.");
+        alert(
+            "Your browser does not support MIDI. External input is disabled."
+        );
     }
 }
 
 // TODO: Does it belong in this file?
 // TODO: Create interface for synthesizer
-export function controlSynthesizerWithMIDI(message, synthesizer) {
+export function controlSynthesizerWithMIDI(message, synthesizer, callback) {
     const [status, data1, data2] = message.data;
     // TODO: Add support for other channels
     if (status === 144) {
         // TODO: Add support for velocity
         synthesizer.playNote(midiToFrequency(data1));
+        callback(); // TODO: Async?
     } else if (status === 128) {
         // Note off
     }
