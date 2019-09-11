@@ -1,4 +1,4 @@
-import { Synthesizer } from "./synthesizer.js";
+import Synthesizer from "./synthesizer.js";
 
 function initializeFileBuffer(
     numChannels,

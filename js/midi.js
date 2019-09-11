@@ -26,8 +26,8 @@ export function controlSynthesizerWithMIDI(message, synthesizer, callback) {
     const [status, data1, data2] = message.data;
     // TODO: Add support for other channels
     if (status === 144) {
-        // TODO: Add support for velocity
-        synthesizer.playNote(midiToFrequency(data1));
+        const volume = data2 / 127;
+        synthesizer.playNote(midiToFrequency(data1), volume);
         callback(); // TODO: Async?
     } else if (status === 128) {
         // Note off
