@@ -14,6 +14,14 @@ body {
     color: #c8d4e1;
 }
 
+.controls-group {
+    padding-bottom: 10px;
+}
+
+.controls-group:last-of-type {
+    padding-bottom: 0px;
+}
+
 #panels-wrapper {
     position: absolute;
     top: 33%;
@@ -34,10 +42,15 @@ body {
     border-color: #373f51;
 }
 
+.panel-label {
+    font-size: 12px;
+    padding: 0;
+}
+
 #output-control-wrapper {
     margin-left: 40px;
 }
 
-#midi-input-selector {
+#midi-device-selector {
     margin-left: 10px;
 }

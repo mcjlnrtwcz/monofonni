@@ -62,25 +62,26 @@ function addKeyboardListener(synthesizer) {
     });
 }
 
-function addInputSelectorListener(MIDIInputHandler, MIDIAccess) {
-    document.querySelector("#midi-input-selector").addEventListener("change", event => {
-        const inputID = event.target.value;
-        for (let input of MIDIAccess.inputs.values()) {
-            if (input.id === inputID) {
-                input.onmidimessage = MIDIInputHandler;
-            } else {
-                input.onmidimessage = null;
-            }
-        }
+function addDeviceSelectorListener(midi) {
+    document.querySelector("#midi-device-selector").addEventListener("change", event => {
+        midi.setDevice(event.target.value);
     });
 }
 
-export function initializeEvents(audioContext, synthesizer, MIDIInputHandler, MIDIAccess) {
+function addChannelSelectorListener(midi) {
+    document.querySelector("#midi-channel-selector").addEventListener("change", event => {
+        midi.channel = event.target.value;
+    });
+}
+
+export function initializeEvents(audioContext, synthesizer, midi) {
     addAudioSwitchListener(audioContext);
     addParameterListeners(synthesizer);
     addKeyboardListener(synthesizer);
-    if (MIDIInputHandler, MIDIAccess) {
-        addInputSelectorListener(MIDIInputHandler, MIDIAccess);
+    if (midi) {
+        addDeviceSelectorListener(midi);
+        addChannelSelectorListener(midi);
+        addMIDIInputs(midi.inputs);
     }
 }
 
@@ -93,7 +94,7 @@ export function indicateIncomingMessage() {
 }
 
 export function addMIDIInputs(inputs) {
-    const select = document.querySelector("#midi-input-selector");
+    const select = document.querySelector("#midi-device-selector");
     inputs.forEach(input => {
         const option = document.createElement("option");
         option.appendChild(document.createTextNode(`${input.name} (${input.manufacturer})`));
