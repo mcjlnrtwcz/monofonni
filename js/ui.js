@@ -62,10 +62,23 @@ function addKeyboardListener(synthesizer) {
     });
 }
 
-export function initializeEvents(audioContext, synthesizer) {
+export function initializeEvents(audioContext, synthesizer, handler) {
     addAudioSwitchListener(audioContext);
     addParameterListeners(synthesizer);
     addKeyboardListener(synthesizer);
+
+    document.querySelector("#midi-input-selector").addEventListener("change", event => {
+        const inputID = event.target.value;
+        navigator.requestMIDIAccess().then(midi => {
+            for (let input of midi.inputs.values()) {
+                if (input.id === inputID) {
+                    input.onmidimessage = handler;
+                } else {
+                    input.onmidimessage = null;
+                }
+            }
+        });
+    });
 }
 
 export function indicateIncomingMessage() {
@@ -74,4 +87,14 @@ export function indicateIncomingMessage() {
         () => document.querySelector("#midi-indicator").classList.remove("on"),
         125
     );
+}
+
+export function addMIDIInputs(inputs) {
+    const select = document.querySelector("#midi-input-selector");
+    inputs.forEach(input => {
+        const option = document.createElement("option");
+        option.appendChild(document.createTextNode(`${input.name} (${input.manufacturer})`));
+        option.value = input.id;
+        select.appendChild(option);
+    });
 }

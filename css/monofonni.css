@@ -26,12 +26,18 @@ body {
     border: 1px solid #5b6170;
     border-radius: 4px;
     padding: 10px;
+    margin-bottom: 20px;
 }
 
-#main-panel {
-    margin-bottom: 20px;
+.panel-secondary {
+    background-color: #2e3443;
+    border-color: #373f51;
 }
 
 #output-control-wrapper {
     margin-left: 40px;
+}
+
+#midi-input-selector {
+    margin-left: 10px;
 }

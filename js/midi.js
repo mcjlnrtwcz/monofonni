@@ -1,13 +1,14 @@
 import { midiToFrequency } from "./utils.js";
 
-export function initializeMIDI(messageConsumer) {
+export function initializeMIDI(messageConsumer, inputsHandler) {
     if (navigator.requestMIDIAccess) {
         navigator.requestMIDIAccess().then(
             midi => {
-                // TODO: Add selectable MIDI input
+                const inputs = [];
                 for (let input of midi.inputs.values()) {
-                    input.onmidimessage = messageConsumer;
+                    inputs.push({id: input.id, manufacturer: input.manufacturer, name: input.name, });
                 }
+                inputsHandler(inputs);
             },
             () => {
                 alert("An error occured while accessing MIDI devices.");

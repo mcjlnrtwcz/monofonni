@@ -1,6 +1,4 @@
 #status-panel {
-    background-color: #2e3443;
-    border-color: #373f51;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -17,6 +15,7 @@
     width: 12px;
     border-radius: 4px;
     background: #305a60;
+    margin-right: 10px;
 }
 
 .indicator.on {
@@ -26,7 +25,6 @@
 .indicator-label {
     font-size: 12px;
     padding: 0;
-    margin-left: 10px;
 }
 
 #resume-button {
