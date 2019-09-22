@@ -1,22 +1,9 @@
 import { midiToFrequency } from "./utils.js";
 
-// TODO: Does it belong in this file?
-// TODO: Create interface for synthesizer
-export function controlSynthesizerWithMIDI(message, synthesizer, callback) {
-    const [status, data1, data2] = message.data;
-    // TODO: Add support for other channels
-    if (status === 144) {
-        const volume = data2 / 127;
-        synthesizer.playNote(midiToFrequency(data1), volume);
-        callback(); // TODO: Async?
-    } else if (status === 128) {
-        // Note off
-    }
-}
-
-export class MIDI {
-    constructor(MIDIInputHandler) {
-        this.MIDIInputHandler = MIDIInputHandler;
+export default class MIDI {
+    constructor(synthesizer, noteUICallback) {
+        this.synthesizer = synthesizer;
+        this.noteUICallback = noteUICallback;
         this.MIDIAccess = null;
         this.device = null;
     }
@@ -44,10 +31,22 @@ export class MIDI {
         return inputs;
     }
 
+    handleMIDIMessage(message) {
+        const [status, data1, data2] = message.data;
+        // TODO: Add support for other channels
+        if (status === 144) {
+            const volume = data2 / 127;
+            this.synthesizer.playNote(midiToFrequency(data1), volume);
+            this.noteUICallback(); // TODO: Async?
+        } else if (status === 128) {
+            // Note off
+        }
+    }
+
     setDevice(inputID) {
         for (let input of this.MIDIAccess.inputs.values()) {
             if (input.id === inputID) {
-                input.onmidimessage = this.MIDIInputHandler;
+                input.onmidimessage = (message) => this.handleMIDIMessage(message);
             } else {
                 input.onmidimessage = null;
             }

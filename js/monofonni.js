@@ -1,10 +1,10 @@
 import Synthesizer from "./synthesizer.js";
-import { controlSynthesizerWithMIDI, MIDI } from "./midi.js";
+import MIDI from "./midi.js";
 import { initializeEvents, indicateIncomingMessage } from "./ui.js";
 
 const context = new AudioContext();
 const synthesizer = new Synthesizer(context);
-const midi = new MIDI(message => controlSynthesizerWithMIDI(message, synthesizer, indicateIncomingMessage));
+const midi = new MIDI(synthesizer, indicateIncomingMessage);
 
 midi.initializeMIDI().then(
     () => initializeEvents(context, synthesizer, midi),
