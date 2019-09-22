@@ -4,8 +4,17 @@ import { initializeEvents, indicateIncomingMessage, addMIDIInputs } from "./ui.j
 
 const context = new AudioContext();
 const synthesizer = new Synthesizer(context);
-initializeMIDI(
-    message => controlSynthesizerWithMIDI(message, synthesizer, indicateIncomingMessage),
-    addMIDIInputs
+initializeMIDI(addMIDIInputs).then(
+    MIDIAccess => {
+        initializeEvents(
+            context,
+            synthesizer,
+            message => controlSynthesizerWithMIDI(message, synthesizer, indicateIncomingMessage),
+            MIDIAccess
+        );
+    },
+    error => {
+        alert(error);
+        initializeEvents(context, synthesizer);
+    }
 );
-initializeEvents(context, synthesizer, message => controlSynthesizerWithMIDI(message, synthesizer, indicateIncomingMessage));

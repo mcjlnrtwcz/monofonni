@@ -1,23 +1,22 @@
 import { midiToFrequency } from "./utils.js";
 
-export function initializeMIDI(messageConsumer, inputsHandler) {
+export function initializeMIDI(inputsHandler) {
     if (navigator.requestMIDIAccess) {
-        navigator.requestMIDIAccess().then(
-            midi => {
+        return navigator.requestMIDIAccess().then(
+            MIDIAccess => {
                 const inputs = [];
-                for (let input of midi.inputs.values()) {
+                for (let input of MIDIAccess.inputs.values()) {
                     inputs.push({id: input.id, manufacturer: input.manufacturer, name: input.name, });
                 }
                 inputsHandler(inputs);
+                return MIDIAccess;
             },
             () => {
-                alert("An error occured while accessing MIDI devices.");
+                throw Error("An error occured while accessing MIDI devices.");
             }
         );
     } else {
-        alert(
-            "Your browser does not support MIDI. External input is disabled."
-        );
+        return Promise.reject("Your browser does not support MIDI. External input is disabled.");
     }
 }
 
