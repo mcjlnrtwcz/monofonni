@@ -1,11 +1,17 @@
 import { midiToFrequency } from "./utils.js";
 
+const STATUS = {
+    NOTE_ON: 144,
+    NOTE_OFF: 128,
+};
+
 export default class MIDI {
     constructor(synthesizer, noteUICallback) {
         this.synthesizer = synthesizer;
         this.noteUICallback = noteUICallback;
         this.MIDIAccess = null;
         this.device = null;
+        this.channel = 1;
     }
 
     initializeMIDI() {
@@ -33,13 +39,13 @@ export default class MIDI {
 
     handleMIDIMessage(message) {
         const [status, data1, data2] = message.data;
-        // TODO: Add support for other channels
-        if (status === 144) {
+        const channelOffset = this.channel - 1;
+        if (status === STATUS.NOTE_ON + channelOffset) {
             const volume = data2 / 127;
             this.synthesizer.playNote(midiToFrequency(data1), volume);
             this.noteUICallback(); // TODO: Async?
-        } else if (status === 128) {
-            // Note off
+        } else if (status == STATUS.NOTE_OFF + channelOffset) {
+            // TODO: Note off
         }
     }
 

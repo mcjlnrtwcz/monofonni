@@ -70,7 +70,7 @@ function addDeviceSelectorListener(midi) {
 
 function addChannelSelectorListener(midi) {
     document.querySelector("#midi-channel-selector").addEventListener("change", event => {
-        midi.channel = event.target.value;
+        midi.channel = parseInt(event.target.value);
     });
 }
 
