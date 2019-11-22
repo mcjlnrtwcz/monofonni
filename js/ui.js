@@ -57,7 +57,8 @@ function addKeyboardListener(synthesizer) {
 
     document.addEventListener("keypress", event => {
         if (KEY_TO_FREQUENCY.hasOwnProperty(event.key)) {
-            synthesizer.playNote(KEY_TO_FREQUENCY[event.key]);
+            synthesizer.noteOn(KEY_TO_FREQUENCY[event.key]);
+            setTimeout(() => synthesizer.noteOff(), 250);
         }
     });
 }

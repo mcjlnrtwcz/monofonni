@@ -51,11 +51,16 @@ export default class Synthesizer {
         this.output.gain.value = exponentialValue(gain);
     }
 
-    playNote(frequency, volume=1.0) {
+    noteOn(frequency, volume=1.0) {
         this.amp.gain.cancelScheduledValues(this.context.currentTime);
         this.oscillator.frequency.value = frequency;
         // 0.1 is the maximum volume without overdrive
-        this.amp.gain.setValueAtTime(0.1 * volume, this.context.currentTime);
-        this.amp.gain.setTargetAtTime(0, this.context.currentTime + 0.25, 0.1);
+        // Time constant is attack
+        this.amp.gain.setTargetAtTime(0.1 * volume, this.context.currentTime, 0.001);
+    }
+
+    noteOff() {
+        // Time constant is release
+        this.amp.gain.setTargetAtTime(0, this.context.currentTime, 0.001);
     }
 }

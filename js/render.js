@@ -95,4 +95,5 @@ context.startRendering().then(audioBuffer => {
     // Avoid memory leaks
     window.URL.revokeObjectURL(file);
 });
-synthesizer.playNote(250);
+synthesizer.noteOn(250);
+setTimeout(() => synthesizer.noteOff(), 250);
