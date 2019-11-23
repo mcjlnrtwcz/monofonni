@@ -43,7 +43,7 @@ export default class MIDI {
         if (status === STATUS.NOTE_ON + channelOffset) {
             const volume = data2 / 127;
             this.synthesizer.noteOn(midiToFrequency(data1), volume);
-            this.noteUICallback(); // TODO: Async?
+            this.noteUICallback();
         } else if (status == STATUS.NOTE_OFF + channelOffset) {
             this.synthesizer.noteOff();
         }

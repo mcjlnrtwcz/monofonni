@@ -1,7 +1,6 @@
 import { midiToFrequency } from "./utils.js";
 
 function addAudioSwitchListener(audioContext) {
-    // TODO: How to handle output from resume?
     document.querySelector("#resume-button").addEventListener("click", () => {
         if (audioContext.state === "suspended") {
             audioContext.resume().then(() => {
@@ -14,7 +13,6 @@ function addAudioSwitchListener(audioContext) {
                     .classList.remove("on");
             });
         }
-        // TODO: Other options?
     });
 }
 
@@ -87,11 +85,13 @@ export function initializeEvents(audioContext, synthesizer, midi) {
 }
 
 export function indicateIncomingMessage() {
-    document.querySelector("#midi-indicator").classList.add("on");
-    setTimeout(
-        () => document.querySelector("#midi-indicator").classList.remove("on"),
-        125
-    );
+    const indicatorClasses = document.querySelector("#midi-indicator").classList;
+    if (indicatorClasses.contains("on")) {
+        clearInterval(window.blinkTimeout);
+    } else {
+        indicatorClasses.add("on");
+    }
+    window.blinkTimeout = setTimeout(() => indicatorClasses.remove("on"), 125);
 }
 
 export function addMIDIInputs(inputs) {
