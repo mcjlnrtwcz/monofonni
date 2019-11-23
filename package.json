@@ -1,0 +1,19 @@
+{
+  "name": "monofonni",
+  "version": "0.1.0",
+  "description": "Simple monophonic synthesizer",
+  "main": "js/monofonni.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mcjlnrtwcz/monofonni.git"
+  },
+  "author": "Maciej Lenartowicz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mcjlnrtwcz/monofonni/issues"
+  },
+  "homepage": "https://github.com/mcjlnrtwcz/monofonni#readme"
+}
