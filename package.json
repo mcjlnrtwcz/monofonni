@@ -1,0 +1,31 @@
+{
+  "name": "monofonni",
+  "version": "0.1.0",
+  "description": "Simple monophonic synthesizer",
+  "main": "js/monofonni.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint .",
+    "lint-fix": "eslint --fix .",
+    "start": "http-server -p 3000 --cors"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mcjlnrtwcz/monofonni.git"
+  },
+  "author": "Maciej Lenartowicz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mcjlnrtwcz/monofonni/issues"
+  },
+  "homepage": "https://github.com/mcjlnrtwcz/monofonni#readme",
+  "devDependencies": {
+    "eslint": "^6.1.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-config-prettier": "^6.7.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-prettier": "^3.1.1",
+    "http-server": "^0.11.1",
+    "prettier": "^1.19.1"
+  }
+}
