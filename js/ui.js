@@ -32,25 +32,25 @@ function addParameterListeners(synthesizer) {
 }
 
 function addKeyboardListener(synthesizer) {
-  const KEY_TO_FREQUENCY = {
-    a: midiToFrequency(60), // C
-    w: midiToFrequency(61), // C#
-    s: midiToFrequency(62), // D
-    e: midiToFrequency(63), // D#
-    d: midiToFrequency(64), // E
-    f: midiToFrequency(65), // F
-    t: midiToFrequency(66), // F#
-    g: midiToFrequency(67), // G
-    y: midiToFrequency(68), // G#
-    h: midiToFrequency(69), // A
-    u: midiToFrequency(70), // A#
-    j: midiToFrequency(71), // B
-    k: midiToFrequency(72) // C
-  };
+  const KEY_TO_FREQUENCY = new Map([
+    ["a", midiToFrequency(60)], // C
+    ["w", midiToFrequency(61)], // C#
+    ["s", midiToFrequency(62)], // D
+    ["e", midiToFrequency(63)], // D#
+    ["d", midiToFrequency(64)], // E
+    ["f", midiToFrequency(65)], // F
+    ["t", midiToFrequency(66)], // F#
+    ["g", midiToFrequency(67)], // G
+    ["y", midiToFrequency(68)], // G#
+    ["h", midiToFrequency(69)], // A
+    ["u", midiToFrequency(70)], // A#
+    ["j", midiToFrequency(71)], // B
+    ["k", midiToFrequency(72)] // C
+  ]);
 
   document.addEventListener("keypress", event => {
-    if (KEY_TO_FREQUENCY.hasOwnProperty(event.key)) {
-      synthesizer.noteOn(KEY_TO_FREQUENCY[event.key]);
+    if (KEY_TO_FREQUENCY.has(event.key)) {
+      synthesizer.noteOn(KEY_TO_FREQUENCY.get(event.key));
       setTimeout(() => synthesizer.noteOff(), 250);
     }
   });
