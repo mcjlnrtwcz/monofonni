@@ -16,22 +16,19 @@ function addAudioSwitchListener(audioContext) {
 
 function addParameterListeners(synthesizer) {
   const frequencyControl = document.querySelector("#frequency-control");
-  frequencyControl.addEventListener(
-    "input",
-    () => (synthesizer.filterFrequency = frequencyControl.value)
-  );
+  frequencyControl.addEventListener("input", () => {
+    synthesizer.filterFrequency = frequencyControl.value;
+  });
 
   const resonanceControl = document.querySelector("#resonance-control");
-  resonanceControl.addEventListener(
-    "input",
-    () => (synthesizer.filterResonance = resonanceControl.value)
-  );
+  resonanceControl.addEventListener("input", () => {
+    synthesizer.filterResonance = resonanceControl.value;
+  });
 
   const outputControl = document.querySelector("#output-control");
-  outputControl.addEventListener(
-    "input",
-    () => (synthesizer.outputGain = outputControl.value)
-  );
+  outputControl.addEventListener("input", () => {
+    synthesizer.outputGain = outputControl.value;
+  });
 }
 
 function addKeyboardListener(synthesizer) {
@@ -71,8 +68,20 @@ function addChannelSelectorListener(midi) {
   document
     .querySelector("#midi-channel-selector")
     .addEventListener("change", event => {
-      midi.channel = parseInt(event.target.value);
+      midi.channel = parseInt(event.target.value, 10);
     });
+}
+
+export function addMIDIInputs(inputs) {
+  const select = document.querySelector("#midi-device-selector");
+  inputs.forEach(input => {
+    const option = document.createElement("option");
+    option.appendChild(
+      document.createTextNode(`${input.name} (${input.manufacturer})`)
+    );
+    option.value = input.id;
+    select.appendChild(option);
+  });
 }
 
 export function initializeEvents(audioContext, synthesizer, midi) {
@@ -94,16 +103,4 @@ export function indicateIncomingMessage() {
     indicatorClasses.add("on");
   }
   window.blinkTimeout = setTimeout(() => indicatorClasses.remove("on"), 125);
-}
-
-export function addMIDIInputs(inputs) {
-  const select = document.querySelector("#midi-device-selector");
-  inputs.forEach(input => {
-    const option = document.createElement("option");
-    option.appendChild(
-      document.createTextNode(`${input.name} (${input.manufacturer})`)
-    );
-    option.value = input.id;
-    select.appendChild(option);
-  });
 }

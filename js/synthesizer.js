@@ -1,8 +1,6 @@
 /** Map linear value (in range [0.0, 1.0]) to exponential value (in custom range). */
 function exponentialValue(linearValue, minValue = 0.0, maxValue = 1.0) {
-  return (
-    ((Math.pow(10, linearValue) - 1) / 9) * (maxValue - minValue) + minValue
-  );
+  return ((10 ** linearValue - 1) / 9) * (maxValue - minValue) + minValue;
 }
 
 export default class Synthesizer {
@@ -35,9 +33,9 @@ export default class Synthesizer {
   }
 
   set filterFrequency(frequency) {
-    frequency = exponentialValue(frequency, 32, 8000);
-    this.filterA.frequency.value = frequency;
-    this.filterB.frequency.value = frequency;
+    const exponentialFrequency = exponentialValue(frequency, 32, 8000);
+    this.filterA.frequency.value = exponentialFrequency;
+    this.filterB.frequency.value = exponentialFrequency;
   }
 
   set filterResonance(resonance) {

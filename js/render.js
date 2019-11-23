@@ -51,17 +51,20 @@ function initializeFileBuffer(
   return buffer;
 }
 
+function maxAbsValue(numbers) {
+  return numbers.reduce((previous, current) => {
+    return Math.max(previous, Math.abs(current));
+  }, 0);
+}
+
 function writeAudioData(audioData, fileBuffer) {
   const dataView = new DataView(fileBuffer);
-  const maxValue = Math.max(
-    Math.abs(Math.min(...audioData)),
-    Math.max(...audioData)
-  );
+  const maxValue = maxAbsValue(audioData);
   let offset = 44; // WAVE header size
-  for (const sample of audioData) {
+  audioData.forEach(sample => {
     dataView.setFloat32(offset, sample / maxValue, true);
     offset += 4;
-  }
+  });
 }
 
 const channels = 1;

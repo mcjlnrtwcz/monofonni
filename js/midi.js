@@ -15,23 +15,26 @@ export default class MIDI {
   }
 
   initializeMIDI() {
-        if (navigator.requestMIDIAccess) {
-            return navigator.requestMIDIAccess().then(
-                MIDIAccess => {
-                    this.MIDIAccess = MIDIAccess;
-                },
-                () => {
-                    throw Error("An error occured while accessing MIDI devices.");
-                }
-            );
-        } 
-            return Promise.reject("Your browser does not support MIDI. External input is disabled.");
-        
+    if (navigator.requestMIDIAccess) {
+      return navigator.requestMIDIAccess().then(
+        MIDIAccess => {
+          this.MIDIAccess = MIDIAccess;
+        },
+        () => {
+          throw Error("An error occured while accessing MIDI devices.");
+        }
+      );
     }
+    return Promise.reject(
+      new Error(
+        "Your browser does not support MIDI. External input is disabled."
+      )
+    );
   }
 
   get inputs() {
     const inputs = [];
+    // eslint-disable-next-line no-restricted-syntax
     for (const input of this.MIDIAccess.inputs.values()) {
       inputs.push({
         id: input.id,
@@ -49,12 +52,13 @@ export default class MIDI {
       const volume = data2 / 127;
       this.synthesizer.noteOn(midiToFrequency(data1), volume);
       this.noteUICallback();
-    } else if (status == STATUS.NOTE_OFF + channelOffset) {
+    } else if (status === STATUS.NOTE_OFF + channelOffset) {
       this.synthesizer.noteOff();
     }
   }
 
   setDevice(inputID) {
+    // eslint-disable-next-line no-restricted-syntax
     for (const input of this.MIDIAccess.inputs.values()) {
       if (input.id === inputID) {
         input.onmidimessage = message => this.handleMIDIMessage(message);
