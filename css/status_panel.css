@@ -1,0 +1,33 @@
+#status-panel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.indicator-group {
+    display: flex;
+    align-items: center;
+}
+
+.indicator {
+    display: inline-block;
+    height: 12px;
+    width: 12px;
+    border-radius: 4px;
+    background: #305a60;
+    margin-right: 10px;
+}
+
+.indicator.on {
+    background: #76b4be;
+}
+
+#resume-button {
+    border: none;
+    background: transparent;
+    color: #c8d4e1;
+}
+
+#resume-button:focus {
+    outline: none;
+}

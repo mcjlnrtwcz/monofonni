@@ -1,7 +1,12 @@
-import { Synthesizer } from "./synthesizer.js";
+import Synthesizer from "./synthesizer.js";
 
-function initializeFileBuffer(numChannels, sampleRate, bitsPerSample, lengthSeconds) {
-    const byteRate = sampleRate * numChannels * bitsPerSample / 8;
+function initializeFileBuffer(
+    numChannels,
+    sampleRate,
+    bitsPerSample,
+    lengthSeconds
+) {
+    const byteRate = (sampleRate * numChannels * bitsPerSample) / 8;
     const subchunk2Size = lengthSeconds * byteRate;
     const chunkSize = 36 + subchunk2Size;
 
@@ -33,7 +38,7 @@ function initializeFileBuffer(numChannels, sampleRate, bitsPerSample, lengthSeco
     dataView.setUint32(24, sampleRate, true);
     dataView.setUint32(28, byteRate, true);
     // block align
-    dataView.setUint16(32, numChannels * bitsPerSample / 8, true);
+    dataView.setUint16(32, (numChannels * bitsPerSample) / 8, true);
     dataView.setUint16(34, bitsPerSample, true);
     // "data"
     dataView.setUint8(36, 100);
@@ -48,7 +53,10 @@ function initializeFileBuffer(numChannels, sampleRate, bitsPerSample, lengthSeco
 
 function writeAudioData(audioData, fileBuffer) {
     const dataView = new DataView(fileBuffer);
-    const maxValue = Math.max(Math.abs(Math.min(...audioData)), Math.max(...audioData));
+    const maxValue = Math.max(
+        Math.abs(Math.min(...audioData)),
+        Math.max(...audioData)
+    );
     let offset = 44; // WAVE header size
     for (let sample of audioData) {
         dataView.setFloat32(offset, sample / maxValue, true);
@@ -59,18 +67,27 @@ function writeAudioData(audioData, fileBuffer) {
 const channels = 1;
 const sampleRate = 48000;
 const lengthSeconds = 5;
-const context = new OfflineAudioContext(channels, sampleRate * lengthSeconds, sampleRate);
+const context = new OfflineAudioContext(
+    channels,
+    sampleRate * lengthSeconds,
+    sampleRate
+);
 const synthesizer = new Synthesizer(context);
 
 context.startRendering().then(audioBuffer => {
-    const fileBuffer = initializeFileBuffer(channels, sampleRate, 32, lengthSeconds);
+    const fileBuffer = initializeFileBuffer(
+        channels,
+        sampleRate,
+        32,
+        lengthSeconds
+    );
     writeAudioData(audioBuffer.getChannelData(0), fileBuffer);
 
-    const data = new Blob([fileBuffer], {type: 'audio/wav'});
+    const data = new Blob([fileBuffer], { type: "audio/wav" });
     const file = window.URL.createObjectURL(data);
 
-    const link = document.createElement('a');
-    link.setAttribute('download', 'render.wav');
+    const link = document.createElement("a");
+    link.setAttribute("download", "render.wav");
     link.href = file;
     document.body.appendChild(link);
     link.click();
@@ -78,4 +95,5 @@ context.startRendering().then(audioBuffer => {
     // Avoid memory leaks
     window.URL.revokeObjectURL(file);
 });
-synthesizer.playNote(250);
+synthesizer.noteOn(250);
+setTimeout(() => synthesizer.noteOff(), 250);

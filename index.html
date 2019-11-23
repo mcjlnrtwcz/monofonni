@@ -1,31 +1,58 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta name="description" content="Simple monophonic synthesizer">
-    <meta name="author" content="Maciej Lenartowicz">
+    <meta charset="utf-8" />
+    <meta name="description" content="Simple monophonic synthesizer" />
+    <meta name="author" content="Maciej Lenartowicz" />
     <title>monofonni</title>
-    <link rel="stylesheet" href="monofonni.css">
+    <link rel="stylesheet" href="css/monofonni.css" />
 </head>
 <body>
-    <div id="main-panel">
-        <div class="fader-wrapper">
-            <div class="fader">
-                <input id="frequency-control" type="range" min="0.0" max="1.0" step="0.001" value="1.0">
+    <div id="panels-wrapper">
+        <div id="main-panel" class="panel">
+            <div class="fader-wrapper">
+                <div class="fader">
+                    <input id="frequency-control" type="range" min="0.0" max="1.0" step="0.001" value="1.0" />
+                </div>
+                <label for="frequency-control">Frequency</label>
             </div>
-            <label for="frequency-control">Frequency</label>
+            <div class="fader-wrapper">
+                <div class="fader">
+                    <input id="resonance-control" type="range" min="0.0" max="1.0" step="0.001" value="0.0" />
+                </div>
+                <label for="resonance-control">Resonance</label>
+            </div>
+            <div id="output-control-wrapper" class="fader-wrapper">
+                <div class="fader">
+                    <input id="output-control" type="range" min="0.0" max="1.0" step="0.001" value="1.0" />
+                </div>
+                <label for="output-control">Output</label>
+            </div>
         </div>
-        <div class="fader-wrapper">
-            <div class="fader">
-                <input id="resonance-control" type="range" min="0.0" max="1.0" step="0.001" value="0.0">
+
+        <div id="status-panel" class="panel panel-secondary">
+            <div class="indicator-group">
+                <div id="midi-indicator" class="indicator"></div>
+                <span class="panel-label">MIDI</span>
             </div>
-            <label for="resonance-control">Resonance</label>
+
+            <div class="indicator-group">
+                <div id="resume-indicator" class="indicator"></div>
+                <button id="resume-button" class="panel-label">ON / OFF</button>
+            </div>
         </div>
-        <div id="output-control-wrapper" class="fader-wrapper">
-            <div class="fader">
-                <input id="output-control" type="range" min="0.0" max="1.0" step="0.001" value="1.0">
+
+        <div class="panel panel-secondary">
+            <div class="controls-group">
+                <span class="panel-label">MIDI DEVICE</span>
+                <select id="midi-device-selector">
+                    <option value="0">N/A</option>
+                </select>
             </div>
-            <label for="output-control">Output</label>
+            <div class="controls-group">
+                <span class="panel-label">MIDI CHANNEL</span>
+                <input id="midi-channel-selector" type="number" min="1" max="16" value="1" />
+            </div>
         </div>
     </div>
 
