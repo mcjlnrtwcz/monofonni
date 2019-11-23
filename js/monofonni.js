@@ -7,6 +7,6 @@ const synthesizer = new Synthesizer(context);
 const midi = new MIDI(synthesizer, indicateIncomingMessage);
 
 midi.initializeMIDI().then(
-    () => initializeEvents(context, synthesizer, midi),
-    error => alert(error)
+  () => initializeEvents(context, synthesizer, midi),
+  error => alert(error)
 );
