@@ -9,8 +9,8 @@ Visit https://mcjlnrtwcz.github.io/monofonni/
 ## Run locally
 Execute
 ```bash
-$ npm install http-server -g
-$ http-server -p 3000 --cors
+$ npm install
+$ npm start
 ```
 and visit http://127.0.0.1:3000
 
