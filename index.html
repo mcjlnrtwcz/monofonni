@@ -47,11 +47,20 @@
                 <span class="panel-label">MIDI DEVICE</span>
                 <select id="midi-device-selector">
                     <option value="0">N/A</option>
+                    <option value="0">N/A</option>
+                    <option value="0">N/A</option>
                 </select>
             </div>
             <div class="controls-group">
                 <span class="panel-label">MIDI CHANNEL</span>
-                <input id="midi-channel-selector" type="number" min="1" max="16" value="1" />
+                <div id="midi-channel-dropdown" class="dropdown">
+                    <button id="midi-channel-dropdown-button" type="button">CH 1</button>
+                    <div id="midi-channel-dropdown-content" class="dropdown-content">
+                      <button type="button">CH 1</button>
+                      <button type="button">CH 2</button>
+                      <button type="button">CH 3</button>
+                    </div>
+                  </div>
             </div>
         </div>
     </div>

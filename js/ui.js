@@ -64,14 +64,6 @@ function addDeviceSelectorListener(midi) {
     });
 }
 
-function addChannelSelectorListener(midi) {
-  document
-    .querySelector("#midi-channel-selector")
-    .addEventListener("change", event => {
-      midi.channel = parseInt(event.target.value, 10);
-    });
-}
-
 export function addMIDIInputs(inputs) {
   const select = document.querySelector("#midi-device-selector");
   inputs.forEach(input => {
@@ -84,13 +76,40 @@ export function addMIDIInputs(inputs) {
   });
 }
 
+function addChannelDropdownListener(midi) {
+  const element = document.querySelector("#midi-channel-dropdown-button");
+  document
+    .querySelector("#midi-channel-dropdown-button")
+    .addEventListener("click", () => {
+      function onClickOutside(event) {
+        if (!element.contains(event.target)) {
+          document
+            .querySelector("#midi-channel-dropdown")
+            .classList.remove("dropdown-shown");
+          removeClickListener();
+        }
+      }
+
+      function removeClickListener() {
+        document.removeEventListener("click", onClickOutside);
+      }
+
+      document.addEventListener("click", onClickOutside);
+
+      // Handle dropdown
+      document
+        .querySelector("#midi-channel-dropdown")
+        .classList.add("dropdown-shown");
+    });
+}
+
 export function initializeEvents(audioContext, synthesizer, midi) {
   addAudioSwitchListener(audioContext);
   addParameterListeners(synthesizer);
   addKeyboardListener(synthesizer);
+  addChannelDropdownListener();
   if (midi) {
     addDeviceSelectorListener(midi);
-    addChannelSelectorListener(midi);
     addMIDIInputs(midi.inputs);
   }
 }

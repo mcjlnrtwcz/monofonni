@@ -1,7 +1,8 @@
 /* Colour palette: https://coolors.co/d8dbe2-a9bcd0-58a4b0-373f51-daa49a */
 
 @import "fader.css";
-@import "status_panel.css";
+@import "status-panel.css";
+@import "midi-panel.css";
 
 body,
 button {
