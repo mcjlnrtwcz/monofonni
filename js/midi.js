@@ -57,10 +57,10 @@ export default class MIDI {
     }
   }
 
-  setDevice(inputID) {
+  setDevice(deviceID) {
     // eslint-disable-next-line no-restricted-syntax
     for (const input of this.MIDIAccess.inputs.values()) {
-      if (input.id === inputID) {
+      if (input.id === deviceID) {
         input.onmidimessage = message => this.handleMIDIMessage(message);
       } else {
         input.onmidimessage = null;

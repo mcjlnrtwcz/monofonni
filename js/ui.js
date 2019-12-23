@@ -1,5 +1,37 @@
 import midiToFrequency from "./utils.js";
 
+export function setDevice(midi, deviceID, deviceName) {
+  midi.setDevice(deviceID);
+  document.querySelector(
+    "#midi-device-dropdown-button"
+  ).innerHTML = `MIDI IN: ${deviceName}`;
+  const channelButtons = document.querySelectorAll(
+    "#midi-device-dropdown-content .dropdown-option"
+  );
+  channelButtons.forEach(channelButton => {
+    channelButton.classList.remove("dropdown-option-selected");
+  });
+  document
+    .querySelector(`#midi-device-${deviceID}`)
+    .classList.add("dropdown-option-selected");
+}
+
+export function setChannel(midi, channel) {
+  midi.channel = channel;
+  document.querySelector(
+    "#midi-channel-dropdown-button"
+  ).innerHTML = `MIDI CHANNEL: ${channel}`;
+  const channelButtons = document.querySelectorAll(
+    "#midi-channel-dropdown-content .dropdown-option"
+  );
+  channelButtons.forEach(channelButton => {
+    channelButton.classList.remove("dropdown-option-selected");
+  });
+  document
+    .querySelector(`#midi-channel-${channel}`)
+    .classList.add("dropdown-option-selected");
+}
+
 function addAudioSwitchListener(audioContext) {
   document.querySelector("#resume-button").addEventListener("click", () => {
     if (audioContext.state === "suspended") {
@@ -56,35 +88,29 @@ function addKeyboardListener(synthesizer) {
   });
 }
 
-function addDeviceSelectorListener(midi) {
-  document
-    .querySelector("#midi-device-selector")
-    .addEventListener("change", event => {
-      midi.setDevice(event.target.value);
-    });
-}
-
-export function addMIDIInputs(inputs) {
-  const select = document.querySelector("#midi-device-selector");
+export function addMIDIInputs(inputs, midi) {
+  const dropdown = document.querySelector("#midi-device-dropdown-content");
   inputs.forEach(input => {
-    const option = document.createElement("option");
-    option.appendChild(
+    const button = document.createElement("button");
+    button.appendChild(
       document.createTextNode(`${input.name} (${input.manufacturer})`)
     );
-    option.value = input.id;
-    select.appendChild(option);
+    button.classList.add("dropdown-option");
+    button.onclick = () => setDevice(midi, input.id, input.name);
+    button.id = `midi-device-${input.id}`;
+    dropdown.appendChild(button);
   });
 }
 
-function addChannelDropdownListener() {
-  const element = document.querySelector("#midi-channel-dropdown-button");
+function addDropdownListener(dropdownID) {
+  const element = document.querySelector(`#${dropdownID}-button`);
   document
-    .querySelector("#midi-channel-dropdown-button")
+    .querySelector(`#${dropdownID}-button`)
     .addEventListener("click", () => {
       function onClickOutside(event) {
         if (!element.contains(event.target)) {
           document
-            .querySelector("#midi-channel-dropdown")
+            .querySelector(`#${dropdownID}`)
             .classList.remove("dropdown-shown");
           removeClickListener();
         }
@@ -97,9 +123,7 @@ function addChannelDropdownListener() {
       document.addEventListener("click", onClickOutside);
 
       // Handle dropdown
-      document
-        .querySelector("#midi-channel-dropdown")
-        .classList.add("dropdown-shown");
+      document.querySelector(`#${dropdownID}`).classList.add("dropdown-shown");
     });
 }
 
@@ -107,10 +131,10 @@ export function initializeEvents(audioContext, synthesizer, midi) {
   addAudioSwitchListener(audioContext);
   addParameterListeners(synthesizer);
   addKeyboardListener(synthesizer);
-  addChannelDropdownListener();
+  addDropdownListener("midi-device-dropdown");
+  addDropdownListener("midi-channel-dropdown");
   if (midi) {
-    addDeviceSelectorListener(midi);
-    addMIDIInputs(midi.inputs);
+    addMIDIInputs(midi.inputs, midi);
   }
 }
 
@@ -122,19 +146,4 @@ export function indicateIncomingMessage() {
     indicatorClasses.add("on");
   }
   window.blinkTimeout = setTimeout(() => indicatorClasses.remove("on"), 125);
-}
-
-export function setChannel(midi, channel) {
-  midi.channel = channel;
-  document.querySelector(
-    "#midi-channel-dropdown-button"
-  ).innerHTML = `MIDI CHANNEL: ${channel}`;
-  // TODO: Select only .dropdown-option than belongs to the MIDI channel dropdown
-  const channelButtons = document.querySelectorAll(".dropdown-option");
-  channelButtons.forEach(channelButton => {
-    channelButton.classList.remove("dropdown-option-selected");
-  });
-  document
-    .querySelector(`#midi-channel-${channel}`)
-    .classList.add("dropdown-option-selected");
 }
