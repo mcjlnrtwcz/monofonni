@@ -1,6 +1,6 @@
 import Synthesizer from "./synthesizer.js";
 import MIDI from "./midi.js";
-import { initializeEvents, indicateIncomingMessage } from "./ui.js";
+import { initializeEvents, indicateIncomingMessage, setChannel } from "./ui.js";
 
 const context = new AudioContext();
 const synthesizer = new Synthesizer(context);
@@ -11,7 +11,4 @@ midi.initializeMIDI().then(
   error => alert(error)
 );
 
-window.setChannel = function(channel) {
-  midi.channel = channel;
-  document.querySelector("#midi-channel-dropdown-button").innerHTML = `MIDI CHANNEL: ${channel}`;
-};
+window.setChannel = channel => setChannel(midi, channel);

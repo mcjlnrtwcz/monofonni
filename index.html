@@ -1,81 +1,216 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <meta charset="utf-8" />
     <meta name="description" content="Simple monophonic synthesizer" />
     <meta name="author" content="Maciej Lenartowicz" />
     <title>monofonni</title>
     <link rel="stylesheet" href="css/monofonni.css" />
-</head>
-<body>
+  </head>
+  <body>
     <div id="panels-wrapper">
-        <div id="main-panel" class="panel">
-            <div class="fader-wrapper">
-                <div class="fader">
-                    <input id="frequency-control" type="range" min="0.0" max="1.0" step="0.001" value="1.0" />
-                </div>
-                <label for="frequency-control">Frequency</label>
-            </div>
-            <div class="fader-wrapper">
-                <div class="fader">
-                    <input id="resonance-control" type="range" min="0.0" max="1.0" step="0.001" value="0.0" />
-                </div>
-                <label for="resonance-control">Resonance</label>
-            </div>
-            <div id="output-control-wrapper" class="fader-wrapper">
-                <div class="fader">
-                    <input id="output-control" type="range" min="0.0" max="1.0" step="0.001" value="1.0" />
-                </div>
-                <label for="output-control">Output</label>
-            </div>
+      <div id="main-panel" class="panel">
+        <div class="fader-wrapper">
+          <div class="fader">
+            <input
+              id="frequency-control"
+              type="range"
+              min="0.0"
+              max="1.0"
+              step="0.001"
+              value="1.0"
+            />
+          </div>
+          <label for="frequency-control">Frequency</label>
+        </div>
+        <div class="fader-wrapper">
+          <div class="fader">
+            <input
+              id="resonance-control"
+              type="range"
+              min="0.0"
+              max="1.0"
+              step="0.001"
+              value="0.0"
+            />
+          </div>
+          <label for="resonance-control">Resonance</label>
+        </div>
+        <div id="output-control-wrapper" class="fader-wrapper">
+          <div class="fader">
+            <input
+              id="output-control"
+              type="range"
+              min="0.0"
+              max="1.0"
+              step="0.001"
+              value="1.0"
+            />
+          </div>
+          <label for="output-control">Output</label>
+        </div>
+      </div>
+
+      <div id="status-panel" class="panel panel-secondary">
+        <div class="indicator-group">
+          <div id="midi-indicator" class="indicator"></div>
+          <span class="panel-label">MIDI</span>
         </div>
 
-        <div id="status-panel" class="panel panel-secondary">
-            <div class="indicator-group">
-                <div id="midi-indicator" class="indicator"></div>
-                <span class="panel-label">MIDI</span>
-            </div>
-
-            <div class="indicator-group">
-                <div id="resume-indicator" class="indicator"></div>
-                <button id="resume-button" class="panel-label">ON / OFF</button>
-            </div>
+        <div class="indicator-group">
+          <div id="resume-indicator" class="indicator"></div>
+          <button id="resume-button" class="panel-label">ON / OFF</button>
         </div>
+      </div>
 
-        <div class="panel panel-secondary">
-            <div class="controls-group">
-                <span class="panel-label">MIDI DEVICE</span>
-                <select id="midi-device-selector">
-                    <option value="0">N/A</option>
-                </select>
-            </div>
-            <div class="controls-group">
-                <div id="midi-channel-dropdown" class="dropdown">
-                    <button id="midi-channel-dropdown-button" type="button">MIDI CHANNEL: 1</button>
-                    <div id="midi-channel-dropdown-content" class="dropdown-content">
-                      <button type="button" onclick="setChannel(1)">1</button>
-                      <button type="button" onclick="setChannel(2)">2</button>
-                      <button type="button" onclick="setChannel(3)">3</button>
-                      <button type="button" onclick="setChannel(4)">4</button>
-                      <button type="button" onclick="setChannel(5)">5</button>
-                      <button type="button" onclick="setChannel(6)">6</button>
-                      <button type="button" onclick="setChannel(7)">7</button>
-                      <button type="button" onclick="setChannel(8)">8</button>
-                      <button type="button" onclick="setChannel(9)">9</button>
-                      <button type="button" onclick="setChannel(10)">10</button>
-                      <button type="button" onclick="setChannel(11)">11</button>
-                      <button type="button" onclick="setChannel(12)">12</button>
-                      <button type="button" onclick="setChannel(13)">13</button>
-                      <button type="button" onclick="setChannel(14)">14</button>
-                      <button type="button" onclick="setChannel(15)">15</button>
-                      <button type="button" onclick="setChannel(16)">16</button>
-
-                    </div>
-                  </div>
-            </div>
+      <!-- MIDI channel selector -->
+      <div id="midi-channel-dropdown" class="dropdown">
+        <button id="midi-channel-dropdown-button" type="button">
+          MIDI CHANNEL: 1
+        </button>
+        <div id="midi-channel-dropdown-content" class="dropdown-content">
+          <button
+            type="button"
+            class="midi-channel selected-channel"
+            id="midi-channel-1"
+            onclick="setChannel(1)"
+          >
+            1
+          </button>
+          <button
+            type="button"
+            class="midi-channel"
+            id="midi-channel-2"
+            onclick="setChannel(2)"
+          >
+            2
+          </button>
+          <button
+            type="button"
+            class="midi-channel"
+            id="midi-channel-3"
+            onclick="setChannel(3)"
+          >
+            3
+          </button>
+          <button
+            type="button"
+            class="midi-channel"
+            id="midi-channel-4"
+            onclick="setChannel(4)"
+          >
+            4
+          </button>
+          <button
+            type="button"
+            class="midi-channel"
+            id="midi-channel-5"
+            onclick="setChannel(5)"
+          >
+            5
+          </button>
+          <button
+            type="button"
+            class="midi-channel"
+            id="midi-channel-6"
+            onclick="setChannel(6)"
+          >
+            6
+          </button>
+          <button
+            type="button"
+            class="midi-channel"
+            id="midi-channel-7"
+            onclick="setChannel(7)"
+          >
+            7
+          </button>
+          <button
+            type="button"
+            class="midi-channel"
+            id="midi-channel-8"
+            onclick="setChannel(8)"
+          >
+            8
+          </button>
+          <button
+            type="button"
+            class="midi-channel"
+            id="midi-channel-9"
+            onclick="setChannel(9)"
+          >
+            9
+          </button>
+          <button
+            type="button"
+            class="midi-channel"
+            id="midi-channel-10"
+            onclick="setChannel(10)"
+          >
+            10
+          </button>
+          <button
+            type="button"
+            class="midi-channel"
+            id="midi-channel-11"
+            onclick="setChannel(11)"
+          >
+            11
+          </button>
+          <button
+            type="button"
+            class="midi-channel"
+            id="midi-channel-12"
+            onclick="setChannel(12)"
+          >
+            12
+          </button>
+          <button
+            type="button"
+            class="midi-channel"
+            id="midi-channel-13"
+            onclick="setChannel(13)"
+          >
+            13
+          </button>
+          <button
+            type="button"
+            class="midi-channel"
+            id="midi-channel-14"
+            onclick="setChannel(14)"
+          >
+            14
+          </button>
+          <button
+            type="button"
+            class="midi-channel"
+            id="midi-channel-15"
+            onclick="setChannel(15)"
+          >
+            15
+          </button>
+          <button
+            type="button"
+            class="midi-channel"
+            id="midi-channel-16"
+            onclick="setChannel(16)"
+          >
+            16
+          </button>
         </div>
+      </div>
+
+      <div class="panel panel-secondary">
+        <div class="controls-group">
+          <span class="panel-label">MIDI DEVICE</span>
+          <select id="midi-device-selector">
+            <option value="0">N/A</option>
+          </select>
+        </div>
+        <div class="controls-group"></div>
+      </div>
     </div>
 
     <script src="js/monofonni.js" type="module"></script>
-</body>
+  </body>
 </html>

@@ -123,3 +123,17 @@ export function indicateIncomingMessage() {
   }
   window.blinkTimeout = setTimeout(() => indicatorClasses.remove("on"), 125);
 }
+
+export function setChannel(midi, channel) {
+  midi.channel = channel;
+  document.querySelector(
+    "#midi-channel-dropdown-button"
+  ).innerHTML = `MIDI CHANNEL: ${channel}`;
+  const channelButtons = document.querySelectorAll(".midi-channel");
+  channelButtons.forEach(channelButton => {
+    channelButton.classList.remove("selected-channel");
+  });
+  document
+    .querySelector(`#midi-channel-${channel}`)
+    .classList.add("selected-channel");
+}
