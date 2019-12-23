@@ -129,11 +129,12 @@ export function setChannel(midi, channel) {
   document.querySelector(
     "#midi-channel-dropdown-button"
   ).innerHTML = `MIDI CHANNEL: ${channel}`;
-  const channelButtons = document.querySelectorAll(".midi-channel");
+  // TODO: Select only .dropdown-option than belongs to the MIDI channel dropdown
+  const channelButtons = document.querySelectorAll(".dropdown-option");
   channelButtons.forEach(channelButton => {
-    channelButton.classList.remove("selected-channel");
+    channelButton.classList.remove("dropdown-option-selected");
   });
   document
     .querySelector(`#midi-channel-${channel}`)
-    .classList.add("selected-channel");
+    .classList.add("dropdown-option-selected");
 }
