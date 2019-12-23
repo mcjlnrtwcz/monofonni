@@ -10,3 +10,8 @@ midi.initializeMIDI().then(
   () => initializeEvents(context, synthesizer, midi),
   error => alert(error)
 );
+
+window.setChannel = function(channel) {
+  midi.channel = channel;
+  document.querySelector("#midi-channel-dropdown-button").innerHTML = `MIDI CHANNEL: ${channel}`;
+};

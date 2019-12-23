@@ -28,7 +28,6 @@
 }
 
 .dropdown-content button {
-    width: 100%;
     background: transparent;
     border: 0;
     display: block;
@@ -47,7 +46,8 @@
 }
 
 .dropdown-shown .dropdown-content {
-    display: block;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 
 .dropdown-shown #midi-channel-dropdown-button {
@@ -58,6 +58,18 @@
 
 #midi-channel-dropdown-button:focus {
     outline: 0;
+}
+
+#midi-channel-dropdown-button::after {
+    content: "";
+    position: absolute;
+    right: 12px;
+    top: calc(50% - 3px);
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid #c8d4e1;
 }
 
 .dropdown-shown .dropdown-content {

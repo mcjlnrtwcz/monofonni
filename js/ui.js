@@ -76,7 +76,7 @@ export function addMIDIInputs(inputs) {
   });
 }
 
-function addChannelDropdownListener(midi) {
+function addChannelDropdownListener() {
   const element = document.querySelector("#midi-channel-dropdown-button");
   document
     .querySelector("#midi-channel-dropdown-button")
